@@ -11,7 +11,7 @@
 1. **克隆或下载本仓库**  
    将本插件放入你的 ComfyUI `custom_nodes` 目录下，例如：
    ```
-   git clone https://github.com/yourname/ComfyUI-Custom-Node-Config.git
+   git clone https://github.com/pictorialink/ComfyUI-Custom-Node-Config.git
    # 或直接复制文件夹到 ComfyUI/custom_nodes/
    ```
 
