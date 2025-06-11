@@ -4,7 +4,7 @@ from aiohttp import web
 from server import PromptServer
 
 CATEGORY_NAME = "Form Submit"
-CACHE_FILE = os.path.join(os.path.dirname(__file__), "../files/config.json")
+CACHE_FILE = os.path.join(os.path.dirname(__file__), "../files/config.sh")
 
 
 class FormSubmitNode:
@@ -18,7 +18,7 @@ class FormSubmitNode:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "type": (["OpenAI", "Kimi", "DeepSeek"],),  
+                "type": (["Doubao","Qwen","OpenAI", "Kimi", "DeepSeek","Claude"],),  
                 "api_key": ("STRING",  {"multiline": True}),
                 "api_version": ("STRING",  {"multiline": True}),
                 "api_base": ("STRING",  {"multiline": True}),
@@ -43,18 +43,16 @@ class FormSubmitNode:
         os.environ["api_model"] = api_model
         print("FormSubmitNode: env-type=",os.environ.get("llm_type"))
 
-        data = {
-            "type": type,
-            "api_key": api_key,
-            "api_version": api_version,
-            "api_base": api_base,
-            "api_model": api_model,
-        }
-        self.save_config(data)
+        config_content = f"export llm_type={type}\n"
+        config_content += f"export api_key={api_key}\n"
+        config_content += f"export api_version={api_version}\n"
+        config_content += f"export api_base={api_base}\n"
+        config_content += f"export api_model={api_model}\n"
+        self.save_config(config_content)
         return (output_text,)
     
 
 
     def save_config(self,data):
         with open(CACHE_FILE, "w") as f:
-            json.dump(data, f, indent=2)
+            f.write(data)
